@@ -31,12 +31,13 @@
     "@types/react-dom": "^17.0.9",
     "mkdirp": "^1.0.4",
     "parcel": "^2.0.0-beta.3.1",
+    "parcel-namer-custom": "^0.2.0",
     "parcel-namer-rewrite": "^2.0.0-beta.1-8",
     "parcel-namer-sn": "file:parcel-namer-sn",
     "rimraf": "^3.0.2"
   },
   "parcel-namer-rewrite": {
-    ".scss$": "[folder]/[name].[hash].[type]",
+    "chain": "@parcel/namer-default",
     ".jsx?$": "[folder]/[name].[hash].[type]"
   }
 }

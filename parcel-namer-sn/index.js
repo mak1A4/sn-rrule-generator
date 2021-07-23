@@ -3,7 +3,7 @@ const { Namer } = require("@parcel/plugin");
 module.exports = (new Namer({
     name({ bundle, bundleGraph, logger, options }) {
 
-        var entryAssets = bundle.getEntryAssets();
+        /*var entryAssets = bundle.getEntryAssets();
         var filePath;
         entryAssets.forEach(element => {
             //console.log(element.id + " == " + bundle.id);
@@ -12,16 +12,23 @@ module.exports = (new Namer({
                 filePath = element.filePath;
             }
         });
-        console.log(filePath);
+        console.log(filePath);*/
         /*var getAssetById = (id) => {
             return entryAssets.find((a) => a.id == id);
         };
 
-        console.log(getAssetById(bundle.id).filePath);*/
+        console.log(getAssetById(bundle.id).filePath);
+
         let name = "./sn-rrule-generator/" + bundle.id;
         if (!bundle.isEntry) {
             name += "." + bundle.hashReference;
         }
         return name + "." + bundle.type;
+        
+        */
+        if (bundle.isEntry) {
+            return bundle.id + "." + bundle.type;
+        }
+        return "./sn-rrule-generator/" + bundle.id + "." + bundle.type;
     }
 }));
