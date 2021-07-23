@@ -1,0 +1,8 @@
+.btn-dialog {
+    min-width: 125px;
+    margin: 10px;
+}
+.rootContainer > div:first-child {
+    min-height: 325px;
+}
+@import '../node_modules/react-rrule-generator/build/styles.css'
