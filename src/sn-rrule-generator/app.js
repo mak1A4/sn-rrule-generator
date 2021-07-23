@@ -37,15 +37,19 @@ class App extends Component {
                     }}
                     translations={this.getTranslation()}
                 />
-                <div>Preview</div>
                 <ul class="list-group list-group-flush">
                     {this.state.rrulePreview.map((rrdate, i) => {
-                        var fdate = rrdate.toString();
+                        var fdate = rrdate.toLocaleDateString('de-at', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                            weekday: 'long'
+                        });
                         return <li class="list-group-item" key={i}>{fdate}</li>;
                     })}
                 </ul>
                 <button type="button" class="btn btn-primary float-right btn-dialog">Save</button>
-                <button type="button" class="btn btn-secondary float-right btn-dialog">Close</button>
+                <button type="button" class="btn btn-secondary float-right btn-dialog">Cancel</button>
             </div>
         )
     };
