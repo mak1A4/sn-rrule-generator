@@ -4,7 +4,7 @@
   "description": "ServiceNow UI Page that can generate rrules",
   "scripts": {
     "dev": "parcel ./src/index.html",
-    "build": "rimraf ./dist && mkdirp ./dist && parcel build ./src/index.html --reporter @parcel/reporter-bundle-analyzer --log-level info"
+    "build": "rimraf ./dist && mkdirp ./dist && parcel build ./src/index.html --reporter @parcel/reporter-bundle-analyzer"
   },
   "repository": {
     "type": "git",
@@ -29,15 +29,9 @@
     "@parcel/transformer-sass": "^2.0.0-beta.3.1",
     "@types/react": "^17.0.14",
     "@types/react-dom": "^17.0.9",
+    "cheerio": "^1.0.0-rc.10",
     "mkdirp": "^1.0.4",
     "parcel": "^2.0.0-beta.3.1",
-    "parcel-namer-custom": "^0.2.0",
-    "parcel-namer-rewrite": "^2.0.0-beta.1-8",
-    "parcel-namer-sn": "file:parcel-namer-sn",
     "rimraf": "^3.0.2"
-  },
-  "parcel-namer-rewrite": {
-    "chain": "@parcel/namer-default",
-    ".jsx?$": "[folder]/[name].[hash].[type]"
   }
 }

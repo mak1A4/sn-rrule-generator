@@ -8,4 +8,4 @@
 .rootContainer > div:first-child {
     min-height: 325px;
 }
-@import '../../node_modules/react-rrule-generator/build/styles.css'
+@import '../node_modules/bootstrap/dist/css/bootstrap.css', '../node_modules/react-rrule-generator/build/styles.css'
