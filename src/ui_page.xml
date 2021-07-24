@@ -2,6 +2,5 @@
 <j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
     <!-- <j:set var="jvar_pref" value="${sysparm_message}"/> -->
     <input id="sysparm_message" type="hidden" value="${sysparm_message}" />
-    <!-- https://github.com/ol-loginov/parcel-namer-rewrite -->
-
+    <div id="app"></div>
 </j:jelly>
