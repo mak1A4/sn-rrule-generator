@@ -107,3 +107,4 @@ typings/
 
 # ServiceNow OAUTH Refresh token
 .sn-token
+.DS_Store
