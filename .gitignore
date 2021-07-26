@@ -107,3 +107,4 @@ typings/
 
 # ServiceNow OAUTH Refresh token
 .sn-token
+sn.deploy.config.yml
