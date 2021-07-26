@@ -6,7 +6,8 @@
     "dev": "parcel ./src/index.html",
     "parcel-build": "parcel build ./src/index.html --reporter @parcel/reporter-bundle-analyzer --no-source-maps",
     "sn-build": "node ./script/sn-build.js",
-    "build": "rimraf ./dist && mkdirp ./dist && npm run parcel-build && npm run sn-build"
+    "build": "rimraf ./dist && mkdirp ./dist && npm run parcel-build && npm run sn-build",
+    "deploy": "npm run build && node ./script/sn-deploy.js"
   },
   "repository": {
     "type": "git",
