@@ -1,7 +1,7 @@
 const fs = require('fs');
 const YAML = require('yaml');
 const cheerio = require('cheerio');
-const configObj = YAML.parse(fs.readFileSync('./sn.deploy.config.yml', 'utf-8'));
+const configObj = YAML.parse(fs.readFileSync('./sn.config.yml', 'utf-8'));
 const apiPath = configObj.apiPath + configObj.uiPageName;
 
 var indexHtml = fs.readFileSync("./dist/index.html", "utf-8");

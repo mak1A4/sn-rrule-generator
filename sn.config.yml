@@ -1,7 +1,5 @@
 ---
 uiPageName: 'sn-rrule-generator'
 apiPath: '/api/segh4/supa/'
-instanceName: 'YourInstanceName'
-clientId: 'YourClientId'
 updateSetSysId: ''
 applicationSysId: ''

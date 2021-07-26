@@ -2,10 +2,16 @@ const fs = require('fs');
 const YAML = require('yaml');
 const oauth = require('sn-oauth').default;
 const axios = require('axios').default;
-const configObj = YAML.parse(fs.readFileSync('./sn.deploy.config.yml', 'utf-8'));
+const configObj = YAML.parse(fs.readFileSync('./sn.config.yml', 'utf-8'));
 
-const instanceUrl = "https://" + configObj.instanceName + ".service-now.com";
-const tableApiUrl = `${instanceUrl}/api/now/table`;
+const tokenPath = './.sn-token';
+var accessToken, instanceUrl, tableApiUrl;
+if (fs.existsSync(tokenPath)) {
+  let tokenObj = JSON.parse(fs.readFileSync(tokenPath, 'utf-8'));
+  instanceUrl = "https://" + tokenObj.instanceName + ".service-now.com";
+  tableApiUrl = `${instanceUrl}/api/now/table`;
+  accessToken = tokenObj.accessToken;
+}
 
 async function getUiPageRecord(name, authHeader) {
   try {
@@ -21,23 +27,20 @@ async function getUiPageRecord(name, authHeader) {
 }
 
 (async function () {
-  var accessToken;
-  const refreshTokenPath = './.sn-token';
-  if (!fs.existsSync(refreshTokenPath)) {
-    let tokenObj = await oauth(configObj.instanceName, configObj.clientId);
+  if (!fs.existsSync(tokenPath)) {
+    let tokenObj = await oauth();
+    instanceUrl = "https://" + tokenObj.instanceName + ".service-now.com";
+    tableApiUrl = `${instanceUrl}/api/now/table`;
     accessToken = tokenObj.accessToken;
-    fs.writeFileSync(refreshTokenPath, JSON.stringify(tokenObj));
-  } else {
-    let tokenObj = JSON.parse(fs.readFileSync(refreshTokenPath, 'utf-8'));
-    accessToken = tokenObj.accessToken;
+    fs.writeFileSync(tokenPath, JSON.stringify(tokenObj));
   }
   var authHeader = { 'Authorization': `Bearer ${accessToken}` }
-  var uiPageResult = await getUiPageRecord("sn-rrule-generator", authHeader);
+  var uiPageResult = await getUiPageRecord(configObj.uiPageName, authHeader);
   if (uiPageResult.status == 401) {
-    let tokenObj = JSON.parse(fs.readFileSync(refreshTokenPath, 'utf-8'));
-    tokenObj = await oauth(configObj.instanceName, configObj.clientId, tokenObj.clientSecret, tokenObj.refreshToken);
+    let tokenObj = JSON.parse(fs.readFileSync(tokenPath, 'utf-8'));
+    tokenObj = await oauth(tokenObj.instanceName, tokenObj.clientId, tokenObj.clientSecret, tokenObj.refreshToken);
     accessToken = tokenObj.accessToken;
-    fs.writeFileSync(refreshTokenPath, JSON.stringify(tokenObj));
+    fs.writeFileSync(tokenPath, JSON.stringify(tokenObj));
   }
   console.log(uiPageResult);
 })();
