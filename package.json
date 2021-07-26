@@ -33,6 +33,8 @@
     "@types/react": "^17.0.14",
     "@types/react-dom": "^17.0.9",
     "cheerio": "^1.0.0-rc.10",
+    "dotenv": "^10.0.0",
+    "dotenv-stringify": "^2.0.6",
     "mime-types": "^2.1.31",
     "mkdirp": "^1.0.4",
     "parcel": "^2.0.0-beta.3.1",

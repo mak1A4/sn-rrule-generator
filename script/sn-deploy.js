@@ -3,15 +3,26 @@ const YAML = require('yaml');
 const mime = require("mime-types");
 const oauth = require('sn-oauth').default;
 const axios = require('axios').default;
+const dotenv_stringify = require('dotenv-stringify');
 const configObj = YAML.parse(fs.readFileSync('./sn.config.yml', 'utf-8'));
 
-const tokenPath = './.sn-token';
+const dotEnvPath = './.env';
 var accessToken, instanceUrl, tableApiUrl;
-if (fs.existsSync(tokenPath)) {
-  let tokenObj = JSON.parse(fs.readFileSync(tokenPath, 'utf-8'));
-  instanceUrl = "https://" + tokenObj.instanceName + ".service-now.com";
+if (fs.existsSync(dotEnvPath)) {
+  require('dotenv').config();
+  instanceUrl = "https://" + process.env.INSTANCE_NAME + ".service-now.com";
   tableApiUrl = `${instanceUrl}/api/now/table`;
-  accessToken = tokenObj.accessToken;
+  accessToken = process.env.ACCESS_TOKEN;
+}
+
+function writeDotEnv(obj) {
+  fs.writeFileSync(dotEnvPath, dotenv_stringify({
+    "INSTANCE_NAME": obj.instanceName,
+    "CLIENT_ID": obj.clientId,
+    "CLIENT_SECRET": obj.clientSecret,
+    "ACCESS_TOKEN": obj.accessToken,
+    "REFRESH_TOKEN": obj.refreshToken
+  }));
 }
 
 async function getUiPageRecord(name, authHeader) {
@@ -103,20 +114,24 @@ async function deployUiPageAttachments(uiPageSysId, authHeader) {
 }
 
 (async function () {
-  if (!fs.existsSync(tokenPath)) {
+  if (!fs.existsSync(dotEnvPath)) {
     let tokenObj = await oauth();
     instanceUrl = "https://" + tokenObj.instanceName + ".service-now.com";
     tableApiUrl = `${instanceUrl}/api/now/table`;
     accessToken = tokenObj.accessToken;
-    fs.writeFileSync(tokenPath, JSON.stringify(tokenObj));
+    writeDotEnv(tokenObj);
   }
   var authHeader = { 'Authorization': `Bearer ${accessToken}` }
   var uiPageResult = await getUiPageRecord(configObj.uiPageName, authHeader);
   if (uiPageResult.status == 401) {
-    let tokenObj = JSON.parse(fs.readFileSync(tokenPath, 'utf-8'));
-    tokenObj = await oauth(tokenObj.instanceName, tokenObj.clientId, tokenObj.clientSecret, tokenObj.refreshToken);
+    let tokenObj = await oauth(
+      process.env.INSTANCE_NAME,
+      process.env.CLIENT_ID,
+      process.env.CLIENT_SECRET,
+      process.env.REFRESH_TOKEN
+    );
+    writeDotEnv(tokenObj);
     accessToken = tokenObj.accessToken;
-    fs.writeFileSync(tokenPath, JSON.stringify(tokenObj));
     uiPageResult = await getUiPageRecord(configObj.uiPageName, authHeader);
   }
   if (!uiPageResult.result) {

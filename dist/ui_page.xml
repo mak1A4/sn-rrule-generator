@@ -2,5 +2,5 @@
 <j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
     <!-- <j:set var="jvar_pref" value="${sysparm_message}"/> -->
     <input id="sysparm_message" type="hidden" value="${sysparm_message}"></input>
-    <link rel="stylesheet" href="/api/segh4/supa/sn-rrule-generator-test?file=index.27033f8d.css"></link><div id="app"></div><script src="/api/segh4/supa/sn-rrule-generator-test?file=index.426ad946.js"></script>
+    <link rel="stylesheet" href="/api/segh4/supa/sn-rrule-generator-test?file=index.27033f8d.css"></link><div id="app"></div><script src="/api/segh4/supa/sn-rrule-generator-test?file=index.c8aa0195.js"></script>
 </j:jelly>
