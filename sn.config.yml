@@ -1,5 +1,5 @@
 ---
-uiPageName: 'sn-rrule-generator-test'
+uiPageName: 'sn-rrule-generator'
 apiPath: '/api/segh4/supa/'
 updateSetSysId: ''
 applicationSysId: ''

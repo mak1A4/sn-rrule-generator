@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?><unload unload_date="2021-07-26 09:59:49">
+<sys_remote_update_set action="INSERT_OR_UPDATE">
+<application display_value="Global">global</application>
+<application_name>Global</application_name>
+<application_scope>global</application_scope>
+<application_version/>
+<collisions/>
+<commit_date/>
+<deleted/>
+<description>Public REST API to serve attachments of UI Pages for consumption inside a UI-Page. This is needed as a workaround for the 1.3MB Size Limit of UI Scripts.</description>
+<inserted/>
+<name>Serve UI Page Attachment API</name>
+<origin_sys_id/>
+<parent display_value=""/>
+<release_date/>
+<remote_base_update_set display_value=""/>
+<remote_parent_id/>
+<remote_sys_id>27394c65db293c50ecec1a4813961997</remote_sys_id>
+<state>loaded</state>
+<summary/>
+<sys_class_name>sys_remote_update_set</sys_class_name>
+<sys_created_by>m.kirchweger@softpoint.at</sys_created_by>
+<sys_created_on>2021-07-26 09:59:48</sys_created_on>
+<sys_id>a778934adba9bc50ecec1a481396198d</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_updated_by>m.kirchweger@softpoint.at</sys_updated_by>
+<sys_updated_on>2021-07-26 09:59:48</sys_updated_on>
+<update_set display_value=""/>
+<update_source display_value=""/>
+<updated/>
+</sys_remote_update_set>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_ws_operation_c03b0ce5db293c50ecec1a481396195b</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sys_ws_operation"&gt;&lt;sys_ws_operation action="INSERT_OR_UPDATE"&gt;&lt;active&gt;true&lt;/active&gt;&lt;consumes&gt;application/json,application/xml,text/xml&lt;/consumes&gt;&lt;consumes_customized&gt;false&lt;/consumes_customized&gt;&lt;default_operation_uri/&gt;&lt;enforce_acl/&gt;&lt;http_method&gt;GET&lt;/http_method&gt;&lt;name&gt;Default GET&lt;/name&gt;&lt;operation_script&gt;&lt;![CDATA[(function process(request, response) {
+    var recordName = request.pathParams.name;
+	var fileName = request.queryParams.file[0];
+
+    var grParent = new GlideRecord("sys_ui_page");
+    grParent.addEncodedQuery("name=" + recordName);
+    grParent.setLimit(1);
+    grParent.query();
+    if (grParent.next()) {
+        var currentRecord = grParent.getUniqueValue();
+        var ar = new GlideRecord('sys_attachment');
+        ar.addQuery('table_sys_id', currentRecord);
+        ar.addQuery('file_name', fileName);
+        ar.query();
+        if (ar.next()) {
+			var gsa = new GlideSysAttachment();
+			var arStream = gsa.getContentStream(ar.sys_id);
+            response.setContentType(ar.getValue("content_type"));
+            response.setStatus(200);
+			response.getStreamWriter().writeStream(arStream);
+        } else {
+            return "file not found";
+        }
+    } else {
+		return "parent not found";
+	}
+})(request, response);]]&gt;&lt;/operation_script&gt;&lt;operation_uri&gt;/api/segh4/supa/{name}&lt;/operation_uri&gt;&lt;produces&gt;application/json,application/xml,text/xml&lt;/produces&gt;&lt;produces_customized&gt;false&lt;/produces_customized&gt;&lt;relative_path&gt;/{name}&lt;/relative_path&gt;&lt;request_example/&gt;&lt;requires_acl_authorization&gt;false&lt;/requires_acl_authorization&gt;&lt;requires_authentication&gt;false&lt;/requires_authentication&gt;&lt;requires_snc_internal_role&gt;false&lt;/requires_snc_internal_role&gt;&lt;short_description/&gt;&lt;sys_class_name&gt;sys_ws_operation&lt;/sys_class_name&gt;&lt;sys_created_by&gt;m.kirchweger@softpoint.at&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2021-07-24 06:01:55&lt;/sys_created_on&gt;&lt;sys_id&gt;c03b0ce5db293c50ecec1a481396195b&lt;/sys_id&gt;&lt;sys_mod_count&gt;5&lt;/sys_mod_count&gt;&lt;sys_name&gt;Default GET&lt;/sys_name&gt;&lt;sys_package display_value="Global" source="global"&gt;global&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_ws_operation_c03b0ce5db293c50ecec1a481396195b&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;m.kirchweger@softpoint.at&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2021-07-24 22:36:05&lt;/sys_updated_on&gt;&lt;web_service_definition display_value="Serve UI Page Attachment API"&gt;d87984a5db293c50ecec1a48139619d7&lt;/web_service_definition&gt;&lt;web_service_version/&gt;&lt;/sys_ws_operation&gt;&lt;/record_update&gt;</payload>
+<payload_hash>1201174735</payload_hash>
+<remote_update_set display_value="Serve UI Page Attachment API">a778934adba9bc50ecec1a481396198d</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>m.kirchweger@softpoint.at</sys_created_by>
+<sys_created_on>2021-07-26 09:59:48</sys_created_on>
+<sys_id>6378934adba9bc50ecec1a481396198e</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>17adaa94b1f0000001</sys_recorded_at>
+<sys_updated_by>m.kirchweger@softpoint.at</sys_updated_by>
+<sys_updated_on>2021-07-26 09:59:48</sys_updated_on>
+<table/>
+<target_name>Default GET</target_name>
+<type>Scripted REST Resource</type>
+<update_domain>global</update_domain>
+<update_guid>5a6237a59be17c506ce2132b64aa0a5d</update_guid>
+<update_guid_history>5a6237a59be17c506ce2132b64aa0a5d:1201174735,ae017b65ace17c509cc870b7929804ae:1454042731,9f26fd29ca6d3c509a8630956761ae87:-1806890689,6df5f929936d3c50e58d05c558f4ed9b:1215419543,db709ce999293c507fac6ddef4ac871b:1498314975,5fde4469fe293c50ebb830b4c3366ece:-454804253</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_ws_definition_d87984a5db293c50ecec1a48139619d7</name>
+<payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ws_definition"><sys_ws_definition action="INSERT_OR_UPDATE"><active>true</active><base_uri>/api/segh4/supa</base_uri><consumes>application/json,application/xml,text/xml</consumes><consumes_customized>false</consumes_customized><default_version>No active default version</default_version><doc_link/><enforce_acl/><is_versioned>false</is_versioned><name>Serve UI Page Attachment API</name><namespace>segh4</namespace><produces>application/json,application/xml,text/xml</produces><produces_customized>false</produces_customized><service_id>supa</service_id><short_description/><sys_class_name>sys_ws_definition</sys_class_name><sys_created_by>m.kirchweger@softpoint.at</sys_created_by><sys_created_on>2021-07-24 05:39:21</sys_created_on><sys_id>d87984a5db293c50ecec1a48139619d7</sys_id><sys_mod_count>2</sys_mod_count><sys_name>Serve UI Page Attachment API</sys_name><sys_package display_value="Global" source="global">global</sys_package><sys_policy/><sys_scope display_value="Global">global</sys_scope><sys_update_name>sys_ws_definition_d87984a5db293c50ecec1a48139619d7</sys_update_name><sys_updated_by>m.kirchweger@softpoint.at</sys_updated_by><sys_updated_on>2021-07-24 06:03:01</sys_updated_on></sys_ws_definition></record_update>]]></payload>
+<payload_hash>1842536480</payload_hash>
+<remote_update_set display_value="Serve UI Page Attachment API">a778934adba9bc50ecec1a481396198d</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>m.kirchweger@softpoint.at</sys_created_by>
+<sys_created_on>2021-07-26 09:59:48</sys_created_on>
+<sys_id>ab78934adba9bc50ecec1a481396198d</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>17ad71c1dff0000001</sys_recorded_at>
+<sys_updated_by>m.kirchweger@softpoint.at</sys_updated_by>
+<sys_updated_on>2021-07-26 09:59:48</sys_updated_on>
+<table/>
+<target_name>Serve UI Page Attachment API</target_name>
+<type>Scripted REST API</type>
+<update_domain>global</update_domain>
+<update_guid>ef1f88a9bb293c503a332d8673eab285</update_guid>
+<update_guid_history>ef1f88a9bb293c503a332d8673eab285:1842536480,6e2bc8e577293c50afeb216d60a8ee98:-2113909910,74b984a598293c502a290f53086a3734:-2097252602</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+</unload>
