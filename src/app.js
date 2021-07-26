@@ -3,18 +3,19 @@ import ReactRRuleGenerator, { translations } from 'react-rrule-generator';
 import { rrulestr } from 'rrule'
 import queryString from 'query-string';
 import axios from 'axios';
+import { DateTime } from 'luxon';
 
 class App extends Component {
     previewCount = 5;
-    saveLabel = (function() {
+    saveLabel = (function () {
         try { return window.parent.getMessage("Save"); }
-        catch(ex) { return "Save"; }
+        catch (ex) { return "Save"; }
     })();
-    closeLabel = (function() {
+    closeLabel = (function () {
         try { return window.parent.getMessage("Close"); }
-        catch(ex) { return "Close"; }
+        catch (ex) { return "Close"; }
     })();
-    initRule = (function() {
+    initRule = (function () {
         let queryParms = queryString.parse(window.location.search);
         if (queryParms.rrule) return queryParms.rrule;
         return 'DTSTART:20190301T230000Z\nFREQ=YEARLY;BYMONTH=1;BYMONTHDAY=1';
@@ -27,7 +28,7 @@ class App extends Component {
     };
     state = {
         rrule: this.initRule,
-        language: (function() {
+        language: (function () {
             let queryParms = queryString.parse(window.location.search);
             return (queryParms.lang) ? queryParms.lang : 'en';
         })(),
@@ -71,12 +72,17 @@ class App extends Component {
                 />
                 <ul className="list-group list-group-flush">
                     {this.state.rrulePreview.map((rrdate, i) => {
-                        var fdate = rrdate.toLocaleDateString('de-at', {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric',
-                            weekday: 'long'
-                        });
+                        let locale = "en-gb";
+                        if (this.language == "de") locale = "de-at";
+                        let fdate = DateTime.fromJSDate(rrdate)
+                            .toUTC()
+                            .setZone("local", { keepLocalTime: true })
+                            .toJSDate().toLocaleDateString(locale, {
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric',
+                                weekday: 'long'
+                            });
                         return <li className="list-group-item" key={i}>{fdate}</li>;
                     })}
                 </ul>

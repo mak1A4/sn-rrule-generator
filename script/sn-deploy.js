@@ -141,6 +141,7 @@ function writeDotEnv(obj) {
     );
     writeDotEnv(tokenObj);
     accessToken = tokenObj.accessToken;
+    authHeader = { 'Authorization': `Bearer ${accessToken}` }
     uiPageResult = await getUiPageRecord(configObj.uiPageName, authHeader);
   }
   if (!uiPageResult.result) {
