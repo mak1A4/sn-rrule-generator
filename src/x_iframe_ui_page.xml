@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+	 <iframe src="${sysparm_iframe_src}?${sysparm_iframe_args}" style="width:100%;height:${sysparm_iframe_height};border:0px;"></iframe> 
+</j:jelly>
+<!-- This UI Page is not used in this build and is just used for documentation purpose. -->
+<!-- If we want to use the actual UI-Page inside a GlideModal we have to use an iFrame wrapper, 
+     otherwise CSS Rules of Bootstrap bleed in and out. -->
+<script type"text/javascript">
+    <!-- Open GlideModal Code --> <!--
+    g_scratchpad.openEditRecurringRuleDialog = function() {
+        var gm = new GlideModal("x_twgh_pem_modal-iframe");
+		gm.setWidth(800);
+        gm.setTitle(getMessage("Configure reccuring rule"));
+        gm.setPreference('sysparm_iframe_src', '/x_twgh_pem_sn-rrule-generator.do');
+        gm.setPreference('sysparm_iframe_height', '680px');
+		var iFrameArgs = "sys_id=" + g_form.getUniqueValue() + 
+			"&table=" + g_form.getTableName() + "&field=rrule_str&" +
+			"lang=" + g_lang + "&rrule=" + g_form.getValue("rrule_str");
+        gm.setPreference('sysparm_iframe_args', iFrameArgs);
+        gm.render();
+		g_scratchpad.errDialog = gm;
+    };
+	g_scratchpad.closeEditRecurringRuleDialog = function() {
+		g_scratchpad.errDialog.destroy();
+	};
+    -->
+    
+</script>

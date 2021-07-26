@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
-    <!-- <j:set var="jvar_pref" value="${sysparm_message}"/> -->
-    <input id="sysparm_message" type="hidden" value="${sysparm_message}"></input>
+    <!-- Hidden input could be used to pass arguments via GlideModal.
+         But unfortunately CSS is bleeding in and out of GlideModal so we have to use an iframe anyway.
+         As a result arguments will be passed via URL Parameters. -->
+    <!--<input id="sysparm_message" type="hidden" value="${sysparm_message}"></input>-->
     <div id="app"></div>
 </j:jelly>
