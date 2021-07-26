@@ -6,6 +6,11 @@
 <!-- If we want to use the actual UI-Page inside a GlideModal we have to use an iFrame wrapper, 
      otherwise CSS Rules of Bootstrap bleed in and out. -->
 <script type"text/javascript">
+    <!-- Put this in the Client Script Filed to make the GlideModal Dialog wider --> <!--
+    (function() {
+	    $j(".modal-dialog.modal-lg").width("80%");
+    })();
+    -->
     <!-- Open GlideModal Code --> <!--
     g_scratchpad.openEditRecurringRuleDialog = function() {
         var gm = new GlideModal("x_twgh_pem_modal-iframe");
