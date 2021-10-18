@@ -36,4 +36,4 @@ linkList.forEach((lnk) => {
     finalUiPageStr = finalUiPageStr.replace(lnk, lnk + "</link>");
 });
 
-fs.writeFileSync("./dist/ui_page.xml", finalUiPageStr);
+fs.writeFileSync("./dist/ui_page.xml", finalUiPageStr, "utf-8");
